@@ -15,7 +15,11 @@ const Anecdoteslist = (props) => {
         setTimeout(()=> {props.store.dispatch(reset())}, 5000)
     };
 
-    const anecdotes = props.store.getState().anecdotes.sort((a, b)=> {if (a.votes>b.votes) {return -1} else {return 1} })
+    let anecdotes = props.store.getState().anecdotes.sort((a, b)=> {if (a.votes>b.votes) {return -1} else {return 1} })
+    const filter = props.store.getState().filter;
+    if (filter) {
+        anecdotes = anecdotes.filter(x=>x.content.includes(filter))
+    }
 
     return (
         <div style={style}>
