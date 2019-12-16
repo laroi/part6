@@ -1,7 +1,7 @@
 import React from 'react';
 import {vote, createNew} from './reducers/anecdoteReducer'
 const App = (props) => {
-  const anecdotes = props.store.getState()
+  const anecdotes = props.store.getState().sort((a, b)=> {if (a.votes>b.votes) {return -1} else {return 1} })
 
   const _vote = (id) => {
     props.store.dispatch(vote(id))

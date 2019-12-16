@@ -20,14 +20,14 @@ const asObject = (anecdote) => {
 const initialState = anecdotesAtStart.map(asObject)
 
 const reducer = (state = initialState, action) => {
-    console.log('state now: ', state);
-    console.log('action', action);
     switch(action.type) {
         case 'VOTE':
-           const idx = state.findIndex(x=>x.id===action.data.id);
-           const newObj = state[idx].votes +=1;
-           return [...state, newObj ];
+           const nState = [...state]
+           const idx = nState.findIndex(x=>x.id===action.data.id);
+           nState[idx].votes +=1;
+           return [...nState];
         case 'NEW':
+            console.log(action.data);
             return [...state, action.data];
          default:
             return state;
