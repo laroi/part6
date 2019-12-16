@@ -1,12 +1,16 @@
 import React from 'react';
-import {vote} from './reducers/anecdoteReducer'
+import {vote, createNew} from './reducers/anecdoteReducer'
 const App = (props) => {
   const anecdotes = props.store.getState()
 
   const _vote = (id) => {
     props.store.dispatch(vote(id))
   }
+    const onSubmit = (e) => {
+        e.preventDefault();
+        props.store.dispatch(createNew(e.target.content.value.trim()))
 
+    }
   return (
     <div>
       <h2>Anecdotes</h2>
@@ -22,8 +26,8 @@ const App = (props) => {
         </div>
       )}
       <h2>create new</h2>
-      <form>
-        <div><input /></div>
+      <form onSubmit={onSubmit}>
+        <div><input name="content"/></div>
         <button>create</button>
       </form>
     </div>

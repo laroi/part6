@@ -27,8 +27,10 @@ const reducer = (state = initialState, action) => {
            const idx = state.findIndex(x=>x.id===action.data.id);
            const newObj = state[idx].votes +=1;
            return [...state, newObj ];
+        case 'NEW':
+            return [...state, action.data];
          default:
-            return state
+            return state;
     }
 }
 const vote = (id) => {
@@ -37,4 +39,14 @@ const vote = (id) => {
         data: {id}
     }
 }
-export {reducer, vote}
+const createNew = (content) => {
+    return {
+        type: 'NEW',
+        data: {
+            content: content,
+            votes: 0,
+            id: getId()
+        }
+    }
+}
+export {reducer, createNew, vote}
