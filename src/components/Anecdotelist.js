@@ -10,9 +10,9 @@ const Anecdoteslist = (props) => {
         borderWidth: 1
     };
     const _vote = (id) => {
-        const content = props.anecdotes.find(x=>x.id===id).content
-        props.vote(id);
-        props.set(`You voted for ${content}`);
+        const content = props.anecdotes.find(x=>x.id===id)
+        props.vote(id, {content: content.content, votes: content.votes+1 });
+        props.set(`You voted for ${content.content}`);
         setTimeout(()=> {props.reset()}, 5000)
     };
 
@@ -43,7 +43,6 @@ const filterFun = ({filter, anecdotes}) => {
 }
 const mapDispatchToProps = { vote, set, reset};
 const mapStateToProps = (state) => {
-  console.log(state)
   return {
     anecdotes: filterFun(state),
     filter: state.filter

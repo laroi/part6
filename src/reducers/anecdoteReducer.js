@@ -11,16 +11,18 @@ const reducer = (state = initialState, action) => {
         case 'INIT':
             return action.data;
         case 'NEW':
-            console.log(action.data);
             return [...state, action.data];
          default:
             return state;
     }
 }
-const vote = (id) => {
-    return {
-        type: 'VOTE',
-        data: {id}
+const vote = (id, data) => {
+    return async(dispatch) => {
+        const anec = await anecService.vote(id, data);
+        dispatch({
+            type: 'VOTE',
+            data: anec
+        })
     }
 }
 const createNew = (data) => {
