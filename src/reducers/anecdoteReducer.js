@@ -1,5 +1,5 @@
 
-const getId = () => (100000 * Math.random()).toFixed(0)
+
 
 const initialState = [];
 
@@ -25,14 +25,10 @@ const vote = (id) => {
         data: {id}
     }
 }
-const createNew = (content) => {
+const createNew = (data) => {
     return {
         type: 'NEW',
-        data: {
-            content: content,
-            votes: 0,
-            id: getId()
-        }
+        data: data
     }
 }
 

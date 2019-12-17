@@ -1,11 +1,20 @@
 import React from 'react'
 import {createNew} from '../reducers/anecdoteReducer'
 import { connect } from 'react-redux';
-
+import services from '../services/anecdotes';
 const Anecdotesform = (props) => {
+    const getId = () => (100000 * Math.random()).toFixed(0);
     const onSubmit = (e) => {
         e.preventDefault();
-        props.createNew(e.target.content.value.trim())
+        const data = {
+            content: e.target.content.value.trim(),
+            votes: 0,
+            id: getId()
+        };
+        services.add(data)
+        .then((_data)=> {
+            props.createNew(_data);
+        });
     }
   return (
     <div>
