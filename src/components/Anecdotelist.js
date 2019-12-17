@@ -10,21 +10,16 @@ const Anecdoteslist = (props) => {
         borderWidth: 1
     };
     const _vote = (id) => {
-        const content = anecdotes.find(x=>x.id===id).content
+        const content = props.anecdotes.find(x=>x.id===id).content
         props.vote(id);
         props.set(`You voted for ${content}`);
         setTimeout(()=> {props.reset()}, 5000)
     };
 
-    let anecdotes = props.anecdotes.sort((a, b)=> {if (a.votes>b.votes) {return -1} else {return 1} })
-    const filter = props.filter;
-    if (filter) {
-        anecdotes = anecdotes.filter(x=>x.content.includes(filter))
-    }
 
     return (
         <div style={style}>
-        {anecdotes.map(anecdote =>
+        {props.anecdotes.map(anecdote =>
         <div key={anecdote.id}>
         <div>
         {anecdote.content}
@@ -39,11 +34,18 @@ const Anecdoteslist = (props) => {
         </div>
     )
 }
+const filterFun = ({filter, anecdotes}) => {
+    anecdotes = anecdotes.sort((a, b)=> {if (a.votes>b.votes) {return -1} else {return 1} })
+    if (filter) {
+        anecdotes = anecdotes.filter(x=>x.content.includes(filter))
+    }
+    return anecdotes;
+}
 const mapDispatchToProps = { vote, set, reset};
 const mapStateToProps = (state) => {
   console.log(state)
   return {
-    anecdotes: state.anecdotes,
+    anecdotes: filterFun(state),
     filter: state.filter
   }
 }
