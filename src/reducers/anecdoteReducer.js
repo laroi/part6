@@ -1,6 +1,4 @@
-
-
-
+import anecService from '../services/anecdotes';
 const initialState = [];
 
 const reducer = (state = initialState, action) => {
@@ -33,10 +31,13 @@ const createNew = (data) => {
 }
 
 export const init = (data) => {
-  return {
-    type: 'INIT',
-    data: data,
-  }
+    return async (dispatch) => {
+        const anecs = await anecService.getAll();
+        dispatch({
+            type: 'INIT',
+            data: anecs,
+        })
+    }
 }
 
 export {reducer, createNew, vote}
