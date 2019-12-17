@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import {vote} from '../reducers/anecdoteReducer';
-import {set, reset} from '../reducers/notificationReducer';
+import {set} from '../reducers/notificationReducer';
 
 const Anecdoteslist = (props) => {
     const style = {
@@ -12,8 +12,7 @@ const Anecdoteslist = (props) => {
     const _vote = (id) => {
         const content = props.anecdotes.find(x=>x.id===id)
         props.vote(id, {content: content.content, votes: content.votes+1 });
-        props.set(`You voted for ${content.content}`);
-        setTimeout(()=> {props.reset()}, 5000)
+        props.set(`You voted for ${content.content}`, 10000);
     };
 
 
@@ -41,7 +40,7 @@ const filterFun = ({filter, anecdotes}) => {
     }
     return anecdotes;
 }
-const mapDispatchToProps = { vote, set, reset};
+const mapDispatchToProps = { vote, set};
 const mapStateToProps = (state) => {
   return {
     anecdotes: filterFun(state),

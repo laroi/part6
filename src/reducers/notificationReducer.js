@@ -13,10 +13,10 @@ const reducer = (state = initialState, action) => {
             return state;
     }
 }
-const set = (message) => {
-    return {
-        type: 'SET',
-        message: message
+const set = (message, time=5000) => {
+    return async(dispatch) => {
+        dispatch({ type: 'SET', message: message });
+        setTimeout(()=> { dispatch({type: 'RESET'})}, time)
     }
 }
 const reset = () => {
