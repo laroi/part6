@@ -1,16 +1,11 @@
 import React from 'react'
 import {createNew} from '../reducers/anecdoteReducer'
+import { connect } from 'react-redux';
 
 const Anecdotesform = (props) => {
-    const style = {
-        border: 'solid',
-        padding: 10,
-        borderWidth: 1
-    }
-
     const onSubmit = (e) => {
         e.preventDefault();
-        props.store.dispatch(createNew(e.target.content.value.trim()))
+        props.createNew(e.target.content.value.trim())
     }
   return (
     <div>
@@ -23,5 +18,5 @@ const Anecdotesform = (props) => {
 
   )
 }
-
-export default Anecdotesform;
+const mapDispatchToProps= {createNew};
+export default connect(undefined, mapDispatchToProps)(Anecdotesform);
